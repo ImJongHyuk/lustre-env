@@ -32,7 +32,7 @@ RUN apt update && apt install -y \
     git \
     && rm -rf /var/lib/apt/lists/*
 
-RUN dkms install zfs/2.1.5 || true
+RUN dkms install zfs/2.1.5 -k $(uname -r) || true
 RUN modprobe zfs || true
 
 WORKDIR /workspace

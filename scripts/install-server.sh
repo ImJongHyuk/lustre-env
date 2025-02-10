@@ -48,6 +48,7 @@ $SUDO apt install -y \
     zfsutils-linux \
     zlib1g-dev
 
+# $SUDO dkms remove zfs/2.1.5 --all
 $SUDO dkms install zfs/2.1.5 -k $(uname -r)
 $SUDO modprobe zfs
 

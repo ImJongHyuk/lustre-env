@@ -3,7 +3,7 @@ services:
     build:
       context: .
       dockerfile: scripts/Dockerfile
-    container_name: ubuntu_dev_container
+    container_name: ubuntu_lustre_dev
     privileged: true
     cap_add:
       - SYS_ADMIN
