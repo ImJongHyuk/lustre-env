@@ -1,7 +1,6 @@
 #!/bin/bash
 # lustreenv
 
-
 if [[ $# -eq 0 ]]; then
     echo "Usage: . ./lustreenv <root_project_directory>"
     return 1

@@ -1,4 +1,7 @@
 #!/bin/bash
+# install-server.sh
+
+set -e
 
 if [[ ! -d "$LUSTRE_HOME" ]]; then
     echo "Error: LUSTRE_HOME (=$LUSTRE_HOME) does not set."
@@ -43,6 +46,6 @@ fi
 cd $LUSTRE_RELEASE_DIR
 . autogen.sh
 ./configure --with-zfs
-
+make debs -j$(nproc)
 
 cd $LUSTRE_HOME
