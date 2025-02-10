@@ -46,6 +46,9 @@ $SUDO apt install -y \
     zfsutils-linux \
     zlib1g-dev
 
+$SUDO dkms install zfs/2.1.5
+$SUDO modprobe zfs
+
 LUSTRE_RELEASE_DIR=$LUSTRE_HOME/lustre-release
 
 # Check whether the Lustre repository is cloned.
@@ -72,7 +75,7 @@ fi
 
 cd $LUSTRE_RELEASE_DIR
 . autogen.sh
-./configure --with-zfs
+./configure --enable-server --with-zfs
 make debs -j$(nproc)
 
 cd $LUSTRE_HOME

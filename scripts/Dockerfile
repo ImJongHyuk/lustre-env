@@ -26,10 +26,12 @@ RUN apt update && apt install -y \
     swig \
     zfs-dkms \
     zfsutils-linux \
-    zlib1g-dev
-
-RUN apt install git \
+    zlib1g-dev \
+    git \
     && rm -rf /var/lib/apt/lists/*
+
+RUN dkms install zfs/2.1.5 || true
+RUN modprobe zfs || true
 
 WORKDIR /workspace
 
