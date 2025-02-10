@@ -1,0 +1,31 @@
+#!/bin/bash
+# lustreenv
+
+
+if [[ $# -eq 0 ]]; then
+    echo "Usage: . ./lustreenv <root_project_directory>"
+    return 1
+fi
+
+# Set LUSTRE_HOME
+LUSTRE_HOME=$1
+if [[ ! -d "$LUSTRE_HOME" ]]; then
+    echo "Error: Directory $LUSTRE_HOME does not exist."
+    return 1
+fi
+
+export LUSTRE_HOME
+
+# Set enviroment valiables
+USER=$(whoami)
+GROUP=$(id -gn)
+ALIAS_FILE="$LUSTRE_HOME/aliases"
+
+# Set aliases
+if [[ -f "$ALIAS_FILE" ]]; then
+    source "$ALIAS_FILE"
+    echo "Aliases loaded from $ALIAS_FILE"
+else
+    echo "Alias file $ALIAS_FILE not found"
+fi
+
