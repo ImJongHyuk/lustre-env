@@ -25,6 +25,7 @@ $SUDO apt install -y \
     debhelper \
     dkms \
     flex \
+    libkeyutils-dev \
     libmount-dev \
     libnl-3-dev \
     libnl-genl-3-dev \
@@ -35,6 +36,7 @@ $SUDO apt install -y \
     libtool \
     libyaml-dev \
     libzfslinux-dev \
+    rsync \
     module-assistant \
     pkg-config \
     python3-dev \
