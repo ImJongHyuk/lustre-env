@@ -9,6 +9,7 @@ services:
     privileged: true
     volumes:
       - /lib/modules:/lib/modules  # Use host kernel modules
+      - /usr/src:/usr/src  # Use host kernel source
       - .:/workspace  # Mount current directory
     stdin_open: true  # Interactive mode
     tty: true  # Keep terminal connection

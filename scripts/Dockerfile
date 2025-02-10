@@ -29,6 +29,8 @@ RUN apt update && apt install -y \
     zlib1g-dev \
     && rm -rf /var/lib/apt/lists/*
 
+RUN adp install git
+
 WORKDIR /workspace
 
 CMD ["/bin/bash"]
