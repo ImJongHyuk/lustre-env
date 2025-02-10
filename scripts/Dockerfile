@@ -26,10 +26,10 @@ RUN apt update && apt install -y \
     swig \
     zfs-dkms \
     zfsutils-linux \
-    zlib1g-dev \
-    && rm -rf /var/lib/apt/lists/*
+    zlib1g-dev
 
-RUN adp install git
+RUN apt install git \
+    && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /workspace
 
