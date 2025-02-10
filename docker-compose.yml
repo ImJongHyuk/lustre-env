@@ -1,0 +1,12 @@
+version: "3.8"
+
+services:
+  ubuntu_dev:
+    build: scripts/Dockerfile
+    container_name: ubuntu_dev_container
+    privileged: true
+    volumes:
+      - /lib/modules:/lib/modules  # Use host kernel modules
+      - .:/workspace  # Mount current directory
+    stdin_open: true  # Interactive mode
+    tty: true  # Keep terminal connection
