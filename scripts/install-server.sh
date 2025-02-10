@@ -46,7 +46,7 @@ $SUDO apt install -y \
     zfsutils-linux \
     zlib1g-dev
 
-$SUDO dkms install zfs/2.1.5
+$SUDO dkms install zfs/2.1.5 -k $(uname -r)
 $SUDO modprobe zfs
 
 LUSTRE_RELEASE_DIR=$LUSTRE_HOME/lustre-release
