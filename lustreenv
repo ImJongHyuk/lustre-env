@@ -19,6 +19,7 @@ export LUSTRE_HOME
 USER=$(whoami)
 GROUP=$(id -gn)
 ALIAS_FILE="$LUSTRE_HOME/aliases"
+NVME_UTILS_DIR="$LUSTRE_HOME/nvme-utils"
 
 # Set aliases
 if [[ -f "$ALIAS_FILE" ]]; then
@@ -28,3 +29,14 @@ else
     echo "Alias file $ALIAS_FILE not found"
 fi
 
+if [ -d "$NVME_UTILS_DIR" ]; then
+  for script in "$NVME_UTILS_DIR"/*.sh; do
+    if [ -f "$script" ]; then
+      aliasname=$(basename "$script" .sh)
+      alias "$aliasname"="$script"
+    fi
+  done
+  echo "nvme-utils initialized; aliases set."
+else
+  echo "nvme-utils submodule not found. Please add it with: git submodule add https://github.com/ImJongHyuk/nvme-utils.git nvme-utils"
+fi
