@@ -81,4 +81,9 @@ cd $LUSTRE_RELEASE_DIR
 ./configure --enable-server --with-zfs
 make debs -j$(nproc)
 
+cd $LUSTRE_RELEASE_DIR/debs
+dpkg -i lustre-server-*.deb
+modprobe lustre
+cd -
+
 cd $LUSTRE_HOME
