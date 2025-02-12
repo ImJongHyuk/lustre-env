@@ -1,0 +1,3 @@
+[submodule "nvme-utils"]
+	path = nvme-utils
+	url = https://github.com/ImJongHyuk/nvme-utils.git
