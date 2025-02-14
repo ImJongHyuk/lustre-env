@@ -1,1 +1,3 @@
-# Dummy
+#!/bin/bash
+
+alias lustre-setup="$LUSTRE_HOME/scripts/lustre-setup.sh"

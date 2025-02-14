@@ -2,15 +2,15 @@
 # lustreenv
 
 if [[ $# -eq 0 ]]; then
-    echo "Usage: . ./lustreenv <root_project_directory>"
-    return 1
+  echo "Usage: . ./lustreenv <root_project_directory>"
+  return 1
 fi
 
 # Set LUSTRE_HOME
 LUSTRE_HOME=$1
 if [[ ! -d "$LUSTRE_HOME" ]]; then
-    echo "Error: Directory $LUSTRE_HOME does not exist."
-    return 1
+  echo "Error: Directory $LUSTRE_HOME does not exist."
+  return 1
 fi
 
 export LUSTRE_HOME
@@ -23,10 +23,10 @@ NVME_UTILS_DIR="$LUSTRE_HOME/nvme-utils"
 
 # Set aliases
 if [[ -f "$ALIAS_FILE" ]]; then
-    source "$ALIAS_FILE"
-    echo "Aliases loaded from $ALIAS_FILE"
+source "$ALIAS_FILE"
+  echo "Aliases loaded from $ALIAS_FILE"
 else
-    echo "Alias file $ALIAS_FILE not found"
+  echo "Alias file $ALIAS_FILE not found"
 fi
 
 if [ -d "$NVME_UTILS_DIR" ]; then
@@ -40,3 +40,12 @@ if [ -d "$NVME_UTILS_DIR" ]; then
 else
   echo "nvme-utils submodule not found. Please add it with: git submodule add https://github.com/ImJongHyuk/nvme-utils.git nvme-utils"
 fi
+
+_lustre_setup_completion() {
+    local cur="${COMP_WORDS[COMP_CWORD]}"
+    local cmds="setup_mgt_mdt setup_ost start_mgs start_mds start_oss stop_mgs stop_mds stop_oss status check remove_pools"
+    COMPREPLY=( $(compgen -W "${cmds}" -- "${cur}") )
+    return 0
+}
+
+complete -F _lustre_setup_completion lustre-setup

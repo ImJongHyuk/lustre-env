@@ -1,0 +1,49 @@
+# MGT/MDT configuration
+mgt_mdt:
+  pool: mgspool           # ZFS pool name for MGT/MDT
+  device: /dev/nvme4n1    # Device for pool creation
+  server:
+    name: storage01       # Server hostname for MGT/MDT
+    entrypoint: s1        # Server alias or IP address
+    protocol: tcp         # Communication protocol (e.g., tcp)
+  mgt_size: 20            # MGT size in GB
+  mdt:
+    size: 1024            # MDT size in GB
+    index: 0              # MDT index
+
+# OST configuration
+ost:
+  pool_prefix: osspool    # Prefix for OST pool names
+  size: 6500              # OST size in GB
+  mappings:
+    - host: s1            # Host where OSTs are created
+      devices:            # List of devices on the host
+        - /dev/nvme5n1
+        - /dev/nvme6n1
+        - /dev/nvme7n1
+        - /dev/nvme8n1
+    - host: s2
+      devices:
+        - /dev/nvme5n1
+        - /dev/nvme6n1
+        - /dev/nvme7n1
+        - /dev/nvme8n1
+    - host: s3
+      devices:
+        - /dev/nvme5n1
+        - /dev/nvme6n1
+        - /dev/nvme7n1
+        - /dev/nvme8n1
+    - host: s4
+      devices:
+        - /dev/nvme5n1
+        - /dev/nvme6n1
+        - /dev/nvme7n1
+        - /dev/nvme8n1
+
+# Filesystem configuration
+filesystem: lustrefs      # Filesystem name
+
+lustre_dir: /lustre       # Lustre mount directory
+
+block_size: 8K            # ZFS block size
