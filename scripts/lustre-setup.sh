@@ -95,8 +95,9 @@ create_local_mdt() {
   mkdir -p "${LUSTRE_DIR}/${fs}_mdt${mdt_index}/lustre" || error "MDT backing fail"
   local size_kb=$(( mdt_size * 1024 * 1024 ))
   cd "${LUSTRE_DIR}" || error "cd fail: ${LUSTRE_DIR}"
-  mkfs.lustre --mdt --backfstype=zfs --fsname="${fs}" --index="${mdt_index}" --mgsnode="${MGS_SERVER}" \
-    --device-size="${size_kb}" --reformat "${fs}_mdt${mdt_index}/lustre" /dev/zvol/"${zvol_name}" \
+  mkfs.lustre --mdt --backfstype=zfs --fsname="${fs}" --index="${mdt_index}" \
+    --mgsnode="${MGS_SERVER}" --device-size="${size_kb}" --reformat \
+    "${fs}_mdt${mdt_index}/lustre" /dev/zvol/"${zvol_name}" \
     || error "mkfs MDT fail: ${zvol_name}"
   cd - >/dev/null
   info "MDT created: ${fs}_mdt${mdt_index}"
@@ -126,9 +127,10 @@ create_local_ost() {
   fi
   
   cd "${LUSTRE_DIR}" || error "cd fail: ${LUSTRE_DIR}"
-  mkfs.lustre --ost --backfstype=zfs --fsname="${fs}" --index="${ost_index}" --mgsnode="${MGS_SERVER}" \
-    --device-size="${size_kb}" --reformat "${fs}_ost${ost_index}/lustre" \
-    /dev/zvol/"${zvol_name}" || error "mkfs OST fail: ${zvol_name}"
+  mkfs.lustre --ost --backfstype=zfs --fsname="${fs}" --index="${ost_index}" \
+    --mgsnode="${MGS_SERVER}" --device-size="${size_kb}" --reformat \
+    "${fs}_ost${ost_index}/lustre" /dev/zvol/"${zvol_name}" \
+    || error "mkfs OST fail: ${zvol_name}"
   cd - >/dev/null
 }
 
@@ -139,8 +141,8 @@ setup_mgt_mdt_local() {
   sleep 2
   mkdir -p "${LUSTRE_DIR}/mgt/lustre" || error "Failed to create MGT backing store"
   cd "${LUSTRE_DIR}" || error "Failed to cd to ${LUSTRE_DIR}"
-  mkfs.lustre --mgs --backfstype=zfs --device-size=$(( MGT_SIZE * 1024 * 1024 )) --reformat mgt/lustre /dev/zvol/"$POOL/mgt" \
-    || error "mkfs.lustre MGS failed"
+  mkfs.lustre --mgs --backfstype=zfs --device-size=$(( MGT_SIZE * 1024 * 1024 )) \
+    --reformat mgt/lustre /dev/zvol/"$POOL/mgt" || error "mkfs.lustre MGS failed"
   cd - >/dev/null
   info "MGS created"
   create_local_mdt "${FS}" "${MDT_SIZE}" "${MDT_INDEX}"
@@ -231,7 +233,8 @@ start_mgs_local() {
 start_mds_local() {
   if ! mount | grep -q "${LUSTRE_DIR}/${FS}_mdt${MDT_INDEX}"; then
     mkdir -p "${LUSTRE_DIR}/${FS}_mdt${MDT_INDEX}"
-    mount -t lustre "${FS}_mdt${MDT_INDEX}/lustre" "${LUSTRE_DIR}/${FS}_mdt${MDT_INDEX}" || error "MDT mount fail"
+    mount -t lustre "${FS}_mdt${MDT_INDEX}/lustre" "${LUSTRE_DIR}/${FS}_mdt${MDT_INDEX}" \
+      || error "MDT mount fail"
     info "MDT mounted on $(hostname -s)"
   else
     info "MDT already mounted"
@@ -252,7 +255,8 @@ start_oss_local() {
       pool_name="${OST_POOL_PREFIX}_$(hostname -s)_${local_index}"
       mount_source="${FS}_ost${global_index}/lustre"
       info "Mounting OSS on $(hostname -s): ${mount_source} -> ${mount_point}"
-      mount -t lustre "${mount_source}" "${mount_point}" || error "OSS mount fail: ${global_index}"
+      mount -t lustre "${mount_source}" "${mount_point}" \
+        || error "OSS mount fail: ${global_index}"
     else
       info "OST ${global_index} already mounted"
     fi
