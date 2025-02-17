@@ -77,8 +77,16 @@ Then, modify `conf/config.yml` to reflect your system's settings, such as:
 
 After sourcing `lustreenv`, NVMe utility aliases from the `nvme-utils` directory are automatically available. This allows you to run these scripts by simply typing their name (without the `.sh` extension) from any terminal session.
 
-Examples:
+### NVMe Management
+The following commands are available after initializing the environment:
+
 ```bash
+# List NVMe devices and their block devices
 find_nvme
+
+# Bind/Unbind NVMe devices
 bind_nvme -m {vfio|kernel} [-f /path/to/nvme_devices.yml]
+
+# Check NVMe device status
+bind_nvme status [-f /path/to/nvme_devices.yml]
 ```
