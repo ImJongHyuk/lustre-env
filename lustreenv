@@ -29,18 +29,6 @@ else
   echo "Alias file $ALIAS_FILE not found"
 fi
 
-if [ -d "$NVME_UTILS_DIR" ]; then
-  for script in "$NVME_UTILS_DIR"/*.sh; do
-    if [ -f "$script" ]; then
-      aliasname=$(basename "$script" .sh)
-      alias "$aliasname"="$script"
-    fi
-  done
-  echo "nvme-utils initialized; aliases set."
-else
-  echo "nvme-utils submodule not found. Please add it with: git submodule add https://github.com/ImJongHyuk/nvme-utils.git nvme-utils"
-fi
-
 _lustre_setup_completion() {
     local cur="${COMP_WORDS[COMP_CWORD]}"
     local cmds="setup_mgt_mdt setup_ost start_mgs start_mds start_oss stop_mgs stop_mds stop_oss status check remove_pools"
